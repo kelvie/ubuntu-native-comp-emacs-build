@@ -6,9 +6,9 @@
 
 default: run
 
-IMAGENAME = $(shell basename ${PWD})
+IMAGENAME := $(shell basename ${PWD})
 
-CONTAINERNAME = $(shell mktemp -u XXXXXX)
+CONTAINERNAME := $(shell mktemp -u XXXXXX)
 build:
 	docker build -t  $(IMAGENAME) .
 
