@@ -108,7 +108,8 @@ override_dh_auto_configure:
 
 override_dh_auto_build: debian/control
 	dh_auto_build $(auto_gtk)
-  # TODO: clean up elc files to make it build again
+# This causes a rebuild of the elc files which also rebuilds native-files as a side-effect
+	make -C build/nox/lisp bootstrap-clean
 	dh_auto_build $(auto_nox)
 
 # Run tests, but don't allow failures to stop the build.
@@ -123,7 +124,6 @@ override_dh_auto_install: $(autogen_install_files)
 	dh_auto_install $(auto_gtk) --destdir=debian/$(gtk_pkg_name)
 # native-lisp files don't get rebuilt for the second (nox) build, so copy them
 # in.
-	cp -r build/gtk/native-lisp build/nox
 	dh_auto_install $(auto_nox) --destdir=debian/$(nox_pkg_name)
 #
 #	Find the binaries that we need to pass to update-alternatives.
